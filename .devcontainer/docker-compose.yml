@@ -1,0 +1,11 @@
+version: '3.3'
+
+services:
+  jupyter-minimal:
+    build: .
+    environment:
+      # - JUPYTER_ENABLE_LAB=yes
+      - GRANT_SUDO=yes
+    working_dir: /home/jovyan/work
+    volumes:
+      - ../work:/home/jovyan/work

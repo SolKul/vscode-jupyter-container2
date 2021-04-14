@@ -1,0 +1,15 @@
+{
+    "name": "jupyter-devcontainer-project",
+    "dockerComposeFile": [
+        "./docker-compose.yml"
+    ],
+    "service": "jupyter-minimal",
+	"extensions": [
+		"ms-python.python"
+    ],
+    // Uncomment if extensions cannot be installed due to proxies.
+    // "settings": {
+    //     "http.proxyStrictSSL": false
+    // },
+    "workspaceFolder": "/home/jovyan/work"
+} 
