@@ -7,5 +7,6 @@ services:
       # - JUPYTER_ENABLE_LAB=yes
       - GRANT_SUDO=yes
     working_dir: /home/jovyan/work
+    user: root
     volumes:
       - ../work:/home/jovyan/work
