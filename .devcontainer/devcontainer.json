@@ -3,13 +3,9 @@
     "dockerComposeFile": [
         "./docker-compose.yml"
     ],
-    "service": "jupyter-minimal",
+    "service": "jupyter_dev",
 	"extensions": [
 		"ms-python.python"
     ],
-    // Uncomment if extensions cannot be installed due to proxies.
-    // "settings": {
-    //     "http.proxyStrictSSL": false
-    // },
     "workspaceFolder": "/home/jovyan/work"
 } 

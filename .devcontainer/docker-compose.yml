@@ -1,12 +1,15 @@
 version: '3.3'
 
 services:
-  jupyter-minimal:
+  jupyter_dev:
     build: .
     environment:
-      # - JUPYTER_ENABLE_LAB=yes
       - GRANT_SUDO=yes
+      - DOCKER_STACKS_JUPYTER_CMD=notebook
     working_dir: /home/jovyan/work
     user: root
     volumes:
-      - ../work:/home/jovyan/work
+      - type: bind
+        source: ../work
+        target: /home/jovyan/work
+    command: start-notebook.sh --NotebookApp.token=''
