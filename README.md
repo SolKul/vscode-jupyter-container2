@@ -16,9 +16,9 @@ clone this repository
 
 ## Open in Container
 
-1. open Command Palette in Visual Studo Code.
-2. Exec `Remote-Containers: Reopen Folder in Container`
-3. wait until docker-compose build
+1. Press <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>p</kbd> to open Command Palette in Visual Studo Code.
+2. Exec `Remote-Containers: rebuild and Reopen in Container`
+3. wait until docker-compose build and VSCode open work space
 
 # メモ
 ## bashを起動したい場合
@@ -28,32 +28,24 @@ clone this repository
 
 `jupyter/minimal-notebook`や`jupyter/scipy-notebook`など [Jupyter Docker Stacks](https://jupyter-docker-stacks.readthedocs.io/en/latest/)のシリーズのDockerは立ち上がると同時にデフォルトで`start-notebook.sh`が走り、各種設定を行う。(GRAT_SUDOの有効化など)。`start-notebook.sh`が必要な設定を行うのでデフォルトコマンドは変更しないほうがいい。
 
-## Jupyter Labについて
+## Jupyter notebookを使うための設定
 
-徐々に推奨エディタが`Lab`に移り変わっていると思われる。
+[Jupyter Docker Stacks](https://jupyter-docker-stacks.readthedocs.io/en/latest/index.html)は2022年1月ごろ、デフォルトのサーバーバックエンドをjupyter notebookからjupyter serverに切り替えました。これに伴いデフォルトのエディタがjupyter notebookからjupyter Labに切り替わりました。
 
-`loacalhost:8888/tree`にアクセスすると、従来の`jupyter notebook`に、  
-`loacalhost:8888/lab`にアクセスすると、`jupyter lab`にアクセスする
+バックエンドがjupyter serverのままでも、jupyter notebookは引き続き使えます。`loacalhost:8888`にアクセスすると、`jupyter lab`に、`loacalhost:8888/tree`にアクセスすると、従来の`jupyter notebook`にアクセスします。
 
-```docker-compose.yml
-environment:
-    - JUPYTER_ENABLE_LAB=yes
-```
 
-とすると、`localhost:8888`にアクセスした時点で`jupyter lab`にアクセスするするようになる。
+しかし、様々な拡張機能があるjupyter_contrib_nbextensionsはjupyter notebookでしか使えず、しかもバックエンドがjupyter serverだと`/tree`のnotebookからもnbextensionは使えなくなってしまいます。私は選択中の文字を強調する`Highlit Selected Word`を使いたいため、jupyter notebook+jupyter_contrib_nbextensionsを使い続けています。いまのところ同じ機能はjupyter labは対応していないようです。
 
-## nbextensionsについて
+なのでバックエンドをjupyter notebookに切り替える必要があります。
 
-`jupyter_contrib_nbextensions`は`jupyter notebook`でしか使えない。私は選択中の文字を強調する`Highlit Selected Word`を使いたいため、`jupyter notebook`+`jupyter_contrib_nbextensions`を使い続けている。いまのところ同じ機能は`jupyter lab`は対応していない。
 
-しかも、
+[Common Features — Docker Stacks documentation](https://jupyter-docker-stacks.readthedocs.io/en/latest/using/common.html#switching-back-to-the-classic-notebook-or-using-a-different-startup-command)によるとコンテナ内の環境変数`DOCKER_STACKS_JUPYTER_CMD`を`notebook`に設定することで、立ち上がったサーバのバックエンドjupyter notebookに切り替えることができます。なので、`docker-compose.yml`中で次のように設定しています。
 
 ```docker-compose.yml
 environment:
-    - JUPYTER_ENABLE_LAB=yes
+    - DOCKER_STACKS_JUPYTER_CMD=notebook
 ```
-
-としてしまうと、`jupyter notebook`が`jupyter lab`管理下のものになってしまい、`jupyter_contrib_nbextensions`は使えなくなる。`jupyter_contrib_nbextensions`を使いたい場合は上はしないようにする。
 
 ## ユーザーと権限について
 
