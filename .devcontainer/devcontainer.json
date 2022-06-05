@@ -3,7 +3,7 @@
     "dockerComposeFile": [
         "./docker-compose.yml"
     ],
-    "service": "jupyter_dev",
+    "service": "jupyter_dev", //サービス名はdocker-compose.yml内のサービス名※2と一致させる
 	"extensions": [
 		"ms-python.python"
     ],

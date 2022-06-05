@@ -1,14 +1,14 @@
 version: '3.3'
 
 services:
-  jupyter_dev:
-    build: .
+  jupyter_dev: # jupyterコンテナのサービス名※2
+    build: . # ビルド対象のDockerfileが同じフォルダ内にあるためピリオド(.)を打つ
     environment:
       - GRANT_SUDO=yes
       - DOCKER_STACKS_JUPYTER_CMD=notebook
     working_dir: /home/jovyan/work
     user: root
-    volumes:
+    volumes: # ホストとのボリューム共有。../workは上のフォルダ構造で示した※1の一つ上の階層のworkフォルダを指し示す。
       - type: bind
         source: ../work
         target: /home/jovyan/work
